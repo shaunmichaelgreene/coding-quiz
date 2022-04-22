@@ -13,32 +13,55 @@ var choices={
     4: ["numbers & strings", "other arrays", "booleans", "all of the above"],
 };
 
-var questionContainer = document.createElement('div');
-var questionText = document.createElement('h2');
-var option1 = document.createElement('button');
-var option2 = document.createElement('button');
-var option3 = document.createElement('button');
-var option4 = document.createElement('button');
+console.log(choices['4'][3])
 
-// questionText.textContent = [questionArray(i)];
-// option1.textContent = [choices]
+function startQuiz () {
+    console.log("Let the games begin!");
+    loadQuestion()
+    function loadQuestion () {
+        for (let i = 0; i < answers.length; i++) {
+            questionNumber = (questionArray[i]);
+            // choicesToShow = [choices[i]]
+            var questionContainer = document.createElement('div');
+            var questionText = document.createElement('h2');
+            var option1 = document.createElement('button');
+            var option2 = document.createElement('button');
+            var option3 = document.createElement('button');
+            var option4 = document.createElement('button');
+        
+        
+        
+            questionText.textContent = (questionArray[i]);
+            option1.textContent = (choices[currentQuestion][0]);
+            option2.textContent = (choices[currentQuestion][1]);
+            option3.textContent = (choices[currentQuestion][2]);
+            option4.textContent = (choices[currentQuestion][3]);
+        
+            document.body.appendChild(questionContainer);
+            questionContainer.appendChild(questionText);
+            questionContainer.appendChild(option1);
+            questionContainer.appendChild(option2);
+            questionContainer.appendChild(option3);
+            questionContainer.appendChild(option4);
+            console.log("the currentQuestion iteration number is:" + currentQuestion);
+            console.log("the questionNumber is:" + questionNumber);
+            console.log(i);
+        };
+    }
+}
 
-// console.log(choices.q2);
+console.log(choices.q2);
 
-// var questionChoices = choices.q1
+var questionChoices = choices[1]
 
 
-// var answers = [3, 3, 3, 4, 4];
+var answers = [3, 3, 3, 4, 4];
 
-function startQuiz() {
-    window.alert("Let the games begin!");
-};
 
-// currentQuestion();
-//     for (let i = 0; i < answers.length; i++) {
-//         questionToAsk = [questionArray(i)];
-//         choicesToShow = [choices[i]]
-//     };
+
+var currentQuestion = 0;
+
+    
 var startButton = document.querySelector("#start-btn");
 startButton.addEventListener("click", startQuiz)
 
