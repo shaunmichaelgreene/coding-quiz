@@ -8,12 +8,29 @@
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
-    <div id="header">Welcome to Shaun's Coding Quiz Challenge!</div>
-    <div class = "quiz-form-container">
-        <form class = "quiz form">
-            <h2 class = "Try to answer the following coding-related challenge questions."></h2>
-        </form>
-    </div>
+    <header>
+        <!-- placeholder for high scores link, top left -->
+
+        <!-- placeholder for timer, top right -->
+    </header>
+    <main> 
+        <div id="header">Welcome to Shaun's Coding Quiz Challenge!</div>
+        <h1 class="welcome-msg">Try to answer the following coding-related challenge questions within the time limit. Keep in mind that incorrect answers with penalize your score/time by ten seconds!
+        </h1>
+        <div class="button-box">
+            <button id="start-btn">Start Quiz</button>
+        </div>
+        <div class="question-container">
+            <h2 class="question-text"></h2>
+            <ol>
+                <button class="answer-option" id="answer1"></button>
+                <button class="answer-option" id="answer2"></button>
+                <button class="answer-option" id="answer3"></button>
+                <button class="answer-option" id="answer4"></button>
+            </ol>
+        </div>
+
+    </main>
     <script src="./assets/js/.js"></script>
 </body>
 </html>
