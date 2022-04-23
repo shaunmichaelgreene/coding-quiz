@@ -1,4 +1,4 @@
-
+/* start screen styling */
 #welcome-header {
     text-align: center;
     color: blue;
@@ -34,8 +34,47 @@
     color:red;
     border-width: 4px;
 }
+/*end start screen styles*/
+
+/*question stying */
+.question-text {
+    font-size: 40px;
+    text-align: center;
+    color: blue;
+}
+
+.choice-container {
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+}
+
+.choice-btn {
+    width: 200px;
+    height: 100px;
+    border-radius: 10px;
+    border-color: blue;
+    margin: 8px auto;
+    font-size: x-large;
+}
+
+#game-header {
+    display: flex;
+    justify-content: space-around;
+}
+
+.score-link {
+    color: red;
+}
+
+.timer {
+    color: red;
+}
+
+.visible {
+    display:flex;
+}
 
 .hidden {
     display: none;
-    z-index: 999;
 }
