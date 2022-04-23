@@ -1,0 +1,41 @@
+
+#welcome-header {
+    text-align: center;
+    color: blue;
+    font-size: 42px;
+}
+
+#welcome-instructions {
+    text-align: center;    
+}
+
+#button-box {
+    display: flex;
+    justify-content: center;
+}
+
+.choice-btn:hover {
+    color:blue;
+}
+
+#start-btn {
+    margin: 0 auto;
+    width: 200px;
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border-color: blue;
+    font-size:x-large;
+    background-color: yellow;
+}
+
+#start-btn:hover {
+    color:red;
+    border-width: 4px;
+}
+
+.hidden {
+    display: none;
+    z-index: 999;
+}

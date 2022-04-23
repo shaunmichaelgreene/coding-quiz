@@ -1,5 +1,5 @@
 var questionArray = [
-    "1. Commonly used data types DO NOT include:",
+  "1. Commonly used data types DO NOT include:",
   "2. The condition in an IF / ELSE statement is enclosed with ________.",
   "3. String values must be enclosed within __________ when being assigned to variables.",
   "4. A very useful tool used during development and debugging for printing content to the debugger is:",
@@ -15,21 +15,32 @@ var choices = {
   4: ["numbers & strings", "other arrays", "booleans", "all of the above"],
 };
 
-console.log(choices.q2);
-
-var questionChoices = choices[1];
+var questionChoices = choices[currentQuestion];
 
 var answers = [3, 3, 3, 4, 4];
-
+var correctScore = 0;
 var currentQuestion = 0;
-console.log(choices["4"][3]);
+var welcomeHeader = document.querySelector("#welcome-header");
+var welcomeInstructions = document.querySelector("#welcome-instructions");
+var buttonBox = document.querySelector("#button-box");
 
-debugger;
-function loadQuestion() {
-  console.log("Let the games begin!");
-  for (var i = 0; i < answers.length; i++) {
-    questionNumber = questionArray[i];
-    // choicesToShow = [choices[i]]
+// console.log(choices["4"][3]);
+
+function startQuiz() { //triggered by clicking Start Quiz button
+    welcomeHeader.classList.add("hidden"); //hide initial page content
+    welcomeInstructions.classList.add("hidden");
+    startButton.classList.add("hidden"); 
+    //show quiz question
+    correctScore = 0 //reset score
+    //reset timer
+    //start timer
+    loadQuestion();
+}
+
+function loadQuestion() { 
+    console.log("Let the games begin!");
+    //   for (var i = 0; i < answers.length; i++) {
+    questionNumber = questionArray[currentQuestion];
     //create new elements for question container div, h2 question text, and buttons for each answer choice
     var questionContainer = document.createElement("div");
     var questionText = document.createElement("h2");
@@ -43,7 +54,7 @@ function loadQuestion() {
     choice3.classList.add("choice-btn");
     choice4.classList.add("choice-btn");
     //assign content into new elements
-    questionText.textContent = questionArray[i];
+    questionText.textContent = questionArray[currentQuestion];
     choice1.textContent = choices[currentQuestion][0];
     choice2.textContent = choices[currentQuestion][1];
     choice3.textContent = choices[currentQuestion][2];
@@ -57,23 +68,44 @@ function loadQuestion() {
     questionContainer.appendChild(choice4);
     console.log("the currentQuestion iteration number is:" + currentQuestion);
     console.log("the questionNumber is:" + questionNumber);
-    console.log(i);
-  }
+    console.log(currentQuestion);
+    //function pauses, awaits user answer for validation - MAY NEED TO SEPARATE AS OWN FUNCTION
+    if (choiceValidate) { //the underlying function is called by the optionButton event listener, which will return the value of true or false. 
+        correctScore = correctScore++;
+        //rule to determine if any questions are left. If yes - recall loadQuestion function. Else - call endQuiz function
+    }
+    else if (!choiceValidate) {
+        //reduce timer by 10 sec
+        //rule to determine if any questions are left. If yes - recall loadQuestion function. Else - call endQuiz function
+    };
+};
+
+
+
+function choiceValidate() {
+    //validation function to determine if selected option matches the correct answer
+    //if userAnswerIndex === answers[currentQuestion] then value = true, else value = false
+    //return true or false value for use in loadQuestion function
+    return
 }
 
 
 var startButton = document.querySelector("#start-btn");
-startButton.addEventListener("click", loadQuestion());
+startButton.addEventListener("click", startQuiz);
 
 var choiceButton = document.querySelector(".choice-btn");
-choiceButton.addEventListener("click", function () {
-  var questionContainer = document.getElementById(questionContainer);
-  questionContainer.remove();
-  currentQuestion++;
-  loadQuestion(currentQuestion);
+choiceButton.addEventListener("click", function(){
+    var questionContainer = document.getElementById(questionContainer);
+    questionContainer.remove();
+    currentQuestion++;
+    if (currentQuestion > answers.length) {
+            endQuiz ();
+    }
+    else {
+    loadQuestion(currentQuestion);
+    }
 });
 
-//correct answer syntax: choices.q2()
 //main game function
 
 //choice click handler
