@@ -23,7 +23,7 @@ var currentQuestion = 0;
 var welcomeHeader = document.querySelector("#welcome-header");
 var welcomeInstructions = document.querySelector("#welcome-instructions");
 var buttonBox = document.querySelector("#button-box");
-
+var choiceValue= "";
 // console.log(choices["4"][3]);
 
 function startQuiz() { //triggered by clicking Start Quiz button
@@ -48,11 +48,17 @@ function loadQuestion() {
     var choice2 = document.createElement("button");
     var choice3 = document.createElement("button");
     var choice4 = document.createElement("button");
-    //give new elements class names
+    //give new choiceButton elements class names (choice-btn)
     choice1.classList.add("choice-btn");
     choice2.classList.add("choice-btn");
     choice3.classList.add("choice-btn");
     choice4.classList.add("choice-btn");
+    //give new choiceButton elements numerical values
+    choice1.setAttribute('value', 1);
+    choice2.setAttribute('value', 2);
+    choice3.setAttribute('value', 3);
+    choice4.setAttribute('value', 4);
+    
     //assign content into new elements
     questionText.textContent = questionArray[currentQuestion];
     choice1.textContent = choices[currentQuestion][0];
@@ -69,6 +75,23 @@ function loadQuestion() {
     console.log("the currentQuestion iteration number is:" + currentQuestion);
     console.log("the questionNumber is:" + questionNumber);
     console.log(currentQuestion);
+    
+    var choiceButton = document.querySelector(".choice-btn");
+    choiceButton.addEventListener("click", function(){
+        choiceValue = choiceButton.getAttribute(this.value);
+        this.choiceValue = choices([currentQuestion][choiceValue]); //how to determine the selection's index in the array? 
+        //need a way to append a numerical value to each option button, which can be cross-referenced against the answer key
+        questionContainer.remove(); // fucntion to hide just-answered question content
+        currentQuestion++; //increment question counter
+        if (currentQuestion > answers.length) { //if the question count is greater than the length of the answer array, end the quiz
+                endQuiz ();
+        }
+        else {
+        loadQuestion(currentQuestion); //else, re-call the loadQuestion function
+        }
+    });
+    
+
     //function pauses, awaits user answer for validation - MAY NEED TO SEPARATE AS OWN FUNCTION
     if (choiceValidate) { //the underlying function is called by the optionButton event listener, which will return the value of true or false. 
         correctScore = correctScore++;
@@ -80,31 +103,33 @@ function loadQuestion() {
     };
 };
 
+//switch case function for button id choice evaluation? 
 
-
-function choiceValidate() {
+function choiceValidate(choiceValue) {
     //validation function to determine if selected option matches the correct answer
     //if userAnswerIndex === answers[currentQuestion] then value = true, else value = false
     //return true or false value for use in loadQuestion function
-    return
-}
-
-
-var startButton = document.querySelector("#start-btn");
-startButton.addEventListener("click", startQuiz);
-
-var choiceButton = document.querySelector(".choice-btn");
-choiceButton.addEventListener("click", function(){
-    var questionContainer = document.getElementById(questionContainer);
-    questionContainer.remove();
-    currentQuestion++;
-    if (currentQuestion > answers.length) {
-            endQuiz ();
+    if (choiceValue === answers[currentQuestion]) {
+        choiceValidate = true;
+        return
     }
     else {
-    loadQuestion(currentQuestion);
-    }
-});
+        choiceValidate = false;
+        return
+    };
+    
+}
+
+function endQuiz() {
+    //stop timer, check value
+    //return value of correctScore
+    //hide current question content
+    //display end game message (call another function for this?)
+}
+
+var startButton = document.querySelector("#start-btn"); //identify variable for start button
+startButton.addEventListener("click", startQuiz); //add event listener to trigger startQuiz function once clicked
+
 
 //main game function
 
