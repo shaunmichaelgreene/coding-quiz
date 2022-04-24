@@ -71,6 +71,11 @@
     color: red;
 }
 
+.end-header {
+    flex-wrap: wrap;
+    text-align: center;
+}
+
 .visible {
     display:flex;
 }

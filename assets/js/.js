@@ -1,3 +1,4 @@
+//create array for questions
 var questionArray = [
     "1. Commonly used data types DO NOT include:",
     "2. The condition in an IF / ELSE statement is enclosed with ________.",
@@ -7,6 +8,7 @@ var questionArray = [
 ];
 // console.log(questionArray[0]);
 
+//create object to store choices for each question as separate arrays
 var choices = {
     0: ["strings", "booleans", "alerts", "numbers"],
     1: ["quotes", "curly brackets", "parentheses", "square brackets"],
@@ -14,8 +16,10 @@ var choices = {
     3: ["Javascript", "terminal/bash", "for loops", "console.log"],
     4: ["numbers & strings", "other arrays", "booleans", "all of the above"],
 };
+//create array for answer key
 var answers = [3, 3, 3, 4, 4];
 
+//global variables
 var questionChoices = choices[currentQuestion];
 var initials = "";
 var correctScore = 0;
@@ -24,9 +28,10 @@ var welcomeHeader = document.querySelector("#welcome-header");
 var welcomeInstructions = document.querySelector("#welcome-instructions");
 var buttonBox = document.querySelector("#button-box");
 var choiceValue = "";
+var mainHeader = document.querySelector("#main-header");
 var gameHeader = document.querySelector("#game-header");
 var mainTimer = document.createElement("a");
-var timeLeft = 60;
+var timeLeft = 15;
 
 //create new elements for question container div, h2 question text, and buttons for each answer choice
 var questionContainer = document.createElement("div");
@@ -54,7 +59,7 @@ function startQuiz() {
 	// mainTimer.textContent = "Time Remaining: " + timeLeft + " seconds";
 	gameHeader.appendChild(mainTimer);
     correctScore = 0; //reset score
-	timeLeft = 60; //reset timer
+	timeLeft = 15; //reset timer
     //start timer
 	quizTimer(timeLeft);
 	//show quiz question
@@ -86,6 +91,8 @@ function quizTimer () {
 }
 
 function loadQuestion() {
+	// choiceValidate = "";
+	// choiceGrade = "";
     console.log("A new question has loaded!");
     //   for (var i = 0; i < answers.length; i++) {
     questionNumber = questionArray[currentQuestion];
@@ -121,8 +128,8 @@ function loadQuestion() {
     console.log("the currentQuestion iteration number is: " + currentQuestion);
     console.log("the current question is: " + questionNumber);
 
-    var choiceBox = document.querySelector("choice-container");
-    var choiceButton = document.getElementsByClassName("choice-btn");
+    // var choiceBox = document.querySelector("choice-container");
+    // var choiceButton = document.getElementsByClassName("choice-btn");
     // choiceContainer.addEventListener("click", function(){
     choiceContainer.addEventListener("click", function (event) {
         var userChoice = event.target;
@@ -136,8 +143,8 @@ function loadQuestion() {
 		console.log("currently the code is trying to determine if choiceValue (" + choiceValue + ") is equal to the correct answer value of (" + answers[currentQuestion] + "), which corresponds to the correct answer of : " + choices[currentQuestion][(answers[currentQuestion] - 1)]);
 		//need a way to stop/break this function if choiceValue=undefined (click not on the button)
 		debugger;
-		choiceValidate(choiceValue);
-		choiceGrade (choiceValidate);
+		choiceValidate (choiceValue); //call choiceValidate function to determine if the selected choice is correct, return true or false
+		choiceGrade (choiceValidate);// call choiceGrade function to add points or remove time, depending on the grade
 		questionContainer.remove(); // function to hide just-answered question content
         currentQuestion++; //increment question counter
         if (currentQuestion > answers.length) {
@@ -165,6 +172,7 @@ function choiceValidate(userResponse) {
 		return;
 	};
 };
+
 function choiceGrade (){
 	console.log("the choiceGrade function has started! The current value of choiceValidate is: " + choiceValidate);
 
@@ -196,22 +204,26 @@ function choiceGrade (){
 
 function endQuiz() {
 	questionContainer.remove();
+	mainTimer.classList.add("hidden");
 	var finalScore = timeLeft + correctScore
-	var endHeader = document.createElement("h2");
+	var endHeader = document.createElement("div");
 	endHeader.classList.add("end-header");
-	endHeader.textContent = ("The Quiz is Over!");
+	var endMessage = document.createElement("h2");
+	endMessage.textContent = ("the Quiz is Over!");
 	var endSubHeader = document.createElement("h3");
 	endSubHeader.classList.add("end-subheader");
 	endSubHeader.textContent = ("Your final score is: " + finalScore);
-	var initialsInput = document.createElement("form");
-	initialsInput.classList.add("initials-form");
+	var initialsInput = document.createElement("input");
+	initialsInput.classList.add("initials-input");
+	initialsInput.textContent = ("Enter Your Initials");
 	var submitButton = document.createElement("button");
 	submitButton.classList.add("initials-btn");
 	submitButton.textContent = ("Submit");
-	gameHeader.appendChild(endHeader);
-	gameHeader.appendChild(endSubHeader);
-	gameHeader.appendChild(initialsInput);
-	gameheader.appendChild(submitButton);
+	mainHeader.appendChild(endHeader);
+	endHeader.appendChild(endMessage);
+	endHeader.appendChild(endSubHeader);
+	endHeader.appendChild(initialsInput);
+	endHeader.appendChild(submitButton);
 	submitButton.addEventListener("click", function(event) {
 		event.preventDefault();
 		var user = {
