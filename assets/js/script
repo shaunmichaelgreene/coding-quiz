@@ -20,6 +20,7 @@ var choices = {
 var answers = [3, 3, 3, 4, 4];
 
 //global variables
+// var scoreList = document.querySelector("#scores")
 var questionChoices = choices[currentQuestion];
 var initials = "";
 var correctScore = 0;
@@ -53,7 +54,8 @@ function startQuiz() {
     startButton.classList.add("hidden");
 	var scoreLink = document.createElement("a");
 	scoreLink.classList.add("score-link");
-	scoreLink.textContent = "View High Scores";
+	scoreLink.setAttribute('href','./high-scores.html');
+	scoreLink.innerText = "View High Scores";
 	gameHeader.appendChild(scoreLink);
 	mainTimer.classList.add("timer");
 	// mainTimer.textContent = "Time Remaining: " + timeLeft + " seconds";
