@@ -76,6 +76,28 @@
     text-align: center;
 }
 
+.score-container {
+    text-align: center;
+    padding: 10%;
+    margin: 0 20px;
+}
+
+#scores {
+    border: 2px solid blue;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 36px;
+    color: blue;
+    margin: 10px;
+}
+
+.score-box {
+    border: 5px solid red;
+}
+
+.score-button-box {
+    padding-top: 10px;
+}
+
 .visible {
     display:flex;
 }
