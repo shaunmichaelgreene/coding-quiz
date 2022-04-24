@@ -17,7 +17,7 @@ var choices = {
 var answers = [3, 3, 3, 4, 4];
 
 var questionChoices = choices[currentQuestion];
-
+var initials = "";
 var correctScore = 0;
 var currentQuestion = 0;
 var welcomeHeader = document.querySelector("#welcome-header");
@@ -25,7 +25,17 @@ var welcomeInstructions = document.querySelector("#welcome-instructions");
 var buttonBox = document.querySelector("#button-box");
 var choiceValue = "";
 var gameHeader = document.querySelector("#game-header");
+var mainTimer = document.createElement("a");
 var timeLeft = 60;
+
+//create new elements for question container div, h2 question text, and buttons for each answer choice
+var questionContainer = document.createElement("div");
+var questionText = document.createElement("h2");
+var choiceContainer = document.createElement("div");
+var choice1 = document.createElement("button");
+var choice2 = document.createElement("button");
+var choice3 = document.createElement("button");
+var choice4 = document.createElement("button");
 
 // console.log(choices["4"][3]);
 
@@ -40,36 +50,46 @@ function startQuiz() {
 	scoreLink.classList.add("score-link");
 	scoreLink.textContent = "View High Scores";
 	gameHeader.appendChild(scoreLink);
-	var mainTimer = document.createElement("a");
 	mainTimer.classList.add("timer");
-	mainTimer.textContent = "Time Remaining: " + timeLeft;
+	// mainTimer.textContent = "Time Remaining: " + timeLeft + " seconds";
 	gameHeader.appendChild(mainTimer);
-	//show quiz question
     correctScore = 0; //reset score
-    //reset timer
+	timeLeft = 60; //reset timer
     //start timer
+	quizTimer(timeLeft);
+	//show quiz question
     loadQuestion();
 }
 
-// function quizTimer () {
-// 	var timeLeft = 60;
-// 	var timeInterval = setInterval(function) {
-
-// 	var timer = 60;
-// }
+function quizTimer () {
+	mainTimer.textContent = 'Time Remaining: ' + timeLeft + ' seconds';
+	var timeInterval = setInterval(function() {
+		// As long as the `timeLeft` is greater than 1
+		if (timeLeft > 1) {
+			// Set the `textContent` of `mainTimer` to show the remaining seconds
+			mainTimer.textContent = 'Time Remaining: ' + timeLeft + ' seconds';
+			// Decrement `timeLeft` by 1
+			timeLeft--;
+		}   else if (timeLeft === 1) {
+			// When `timeLeft` is equal to 1, rename to 'second' instead of 'seconds'
+			mainTimer.textContent = 'Time Remaining: ' + timeLeft + ' second';
+			timeLeft--;
+		}   else {
+			// Once `timeLeft` gets to 0, set `mainTimer` to an empty string
+			mainTimer.textContent = '';
+			// Use `clearInterval()` to stop the timer
+			clearInterval(timeInterval);
+			// Call the `displayMessage()` function
+			endQuiz();
+		}
+	}, 1000);
+}
 
 function loadQuestion() {
     console.log("A new question has loaded!");
     //   for (var i = 0; i < answers.length; i++) {
     questionNumber = questionArray[currentQuestion];
-    //create new elements for question container div, h2 question text, and buttons for each answer choice
-    var questionContainer = document.createElement("div");
-    var questionText = document.createElement("h2");
-    var choiceContainer = document.createElement("div");
-    var choice1 = document.createElement("button");
-    var choice2 = document.createElement("button");
-    var choice3 = document.createElement("button");
-    var choice4 = document.createElement("button");
+    
     //give new elements class names (choice-btn)
 	questionText.classList.add("question-text");
     choiceContainer.classList.add("choice-container");
@@ -106,7 +126,6 @@ function loadQuestion() {
     // choiceContainer.addEventListener("click", function(){
     choiceContainer.addEventListener("click", function (event) {
         var userChoice = event.target;
-		debugger;
         console.log("the numerical value (1-4) of the button that was just clicked was " + userChoice.value + ", which is stored in the variable userChoice.value");
 		console.log("the current value of choiceValue is: " + choiceValue);
 		console.log("the current value of userChoice.value is: " + userChoice.value);
@@ -116,6 +135,7 @@ function loadQuestion() {
         console.log("the selected answer was: " + this.choiceValue + ", which is stored in the variable this.choiceValue");
 		console.log("currently the code is trying to determine if choiceValue (" + choiceValue + ") is equal to the correct answer value of (" + answers[currentQuestion] + "), which corresponds to the correct answer of : " + choices[currentQuestion][(answers[currentQuestion] - 1)]);
 		//need a way to stop/break this function if choiceValue=undefined (click not on the button)
+		debugger;
 		choiceValidate(choiceValue);
 		choiceGrade (choiceValidate);
 		questionContainer.remove(); // function to hide just-answered question content
@@ -128,9 +148,23 @@ function loadQuestion() {
 			//NEED TO RESET THE EVENT LISTENER HERE? IT IS ENDING THE FUCNTION AFTER RE-CALLING
         };
     });
-}
+};
 
-//function pauses, awaits user answer for validation - MAY NEED TO SEPARATE AS OWN FUNCTION
+function choiceValidate(userResponse) {
+	console.log("the choiceValidate function has started! The current value of userResponse is: " + userResponse);
+	//validation function to determine if selected option matches the correct answer
+	//if userAnswerIndex === answers[currentQuestion] then value = true, else value = false
+	//return true or false value for use in loadQuestion function
+	if (userResponse == answers[currentQuestion]) { //NEED TO EXPRESS BOTH ITEMS AS A STRING
+		choiceValidate = true;
+		console.log("(True validation received) Now leaving the choiceValidate function with a value of: " + choiceValidate);
+		return;
+	} else {
+		choiceValidate = false;
+		console.log("(False validation received) Now leaving the choiceValidate function with a value of: " + choiceValidate);
+		return;
+	};
+};
 function choiceGrade (){
 	console.log("the choiceGrade function has started! The current value of choiceValidate is: " + choiceValidate);
 
@@ -159,25 +193,35 @@ function choiceGrade (){
 	};
 };
 
-//switch case function for button id choice evaluation?
-
-function choiceValidate(userResponse) {
-	console.log("the choiceValidate function has started! The current value of userResponse is: " + userResponse);
-    //validation function to determine if selected option matches the correct answer
-    //if userAnswerIndex === answers[currentQuestion] then value = true, else value = false
-    //return true or false value for use in loadQuestion function
-    if (userResponse == answers[currentQuestion]) { //NEED TO EXPRESS BOTH ITEMS AS A STRING
-        choiceValidate = true;
-		console.log("(True validation received) Now leaving the choiceValidate function with a value of: " + choiceValidate);
-        return;
-    } else {
-        choiceValidate = false;
-		console.log("(False validation received) Now leaving the choiceValidate function with a value of: " + choiceValidate);
-        return;
-    };
-}
 
 function endQuiz() {
+	questionContainer.remove();
+	var finalScore = timeLeft + correctScore
+	var endHeader = document.createElement("h2");
+	endHeader.classList.add("end-header");
+	endHeader.textContent = ("The Quiz is Over!");
+	var endSubHeader = document.createElement("h3");
+	endSubHeader.classList.add("end-subheader");
+	endSubHeader.textContent = ("Your final score is: " + finalScore);
+	var initialsInput = document.createElement("form");
+	initialsInput.classList.add("initials-form");
+	var submitButton = document.createElement("button");
+	submitButton.classList.add("initials-btn");
+	submitButton.textContent = ("Submit");
+	gameHeader.appendChild(endHeader);
+	gameHeader.appendChild(endSubHeader);
+	gameHeader.appendChild(initialsInput);
+	gameheader.appendChild(submitButton);
+	submitButton.addEventListener("click", function(event) {
+		event.preventDefault();
+		var user = {
+			initials: initialsInput.value.trim(),
+			score: finalScore
+		}
+ 		// set new submission to local storage 
+ 		localStorage.setItem("user", JSON.stringify(user));
+  	});
+
     //stop timer, check value
     //return value of correctScore
     //hide current question content
