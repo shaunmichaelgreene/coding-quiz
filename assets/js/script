@@ -91,8 +91,9 @@ function quizTimer () {
 }
 
 function loadQuestion() {
-	// choiceValidate = "";
-	// choiceGrade = "";
+	choiceValue = ""
+	choiceValidate = "";
+	choiceGrade = "";
     console.log("A new question has loaded!");
     //   for (var i = 0; i < answers.length; i++) {
     questionNumber = questionArray[currentQuestion];
@@ -142,7 +143,7 @@ function loadQuestion() {
         console.log("the selected answer was: " + this.choiceValue + ", which is stored in the variable this.choiceValue");
 		console.log("currently the code is trying to determine if choiceValue (" + choiceValue + ") is equal to the correct answer value of (" + answers[currentQuestion] + "), which corresponds to the correct answer of : " + choices[currentQuestion][(answers[currentQuestion] - 1)]);
 		//need a way to stop/break this function if choiceValue=undefined (click not on the button)
-		debugger;
+		// debugger;
 		choiceValidate (choiceValue); //call choiceValidate function to determine if the selected choice is correct, return true or false
 		choiceGrade (choiceValidate);// call choiceGrade function to add points or remove time, depending on the grade
 		questionContainer.remove(); // function to hide just-answered question content
@@ -162,7 +163,7 @@ function choiceValidate(userResponse) {
 	//validation function to determine if selected option matches the correct answer
 	//if userAnswerIndex === answers[currentQuestion] then value = true, else value = false
 	//return true or false value for use in loadQuestion function
-	if (userResponse == answers[currentQuestion]) { //NEED TO EXPRESS BOTH ITEMS AS A STRING
+	if (userResponse == answers[currentQuestion]) { //NEED TO EXPRESS BOTH ITEMS AS A STRING?
 		choiceValidate = true;
 		console.log("(True validation received) Now leaving the choiceValidate function with a value of: " + choiceValidate);
 		return;
