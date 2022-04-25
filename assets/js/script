@@ -6,7 +6,6 @@ var questionArray = [
     "4. A very useful tool used during development and debugging for printing content to the debugger is:",
     "5. Arrays in JavaScript can be used to store ________.",
 ];
-// console.log(questionArray[0]);
 
 //create object to store choices for each question as separate arrays
 var choices = {
@@ -20,7 +19,6 @@ var choices = {
 var answers = [3, 3, 3, 4, 4];
 
 //global variables
-// var scoreList = document.querySelector("#scores")
 var questionChoices = choices[currentQuestion];
 var initials = "";
 var correctScore = 0;
@@ -43,29 +41,22 @@ var choice2 = document.createElement("button");
 var choice3 = document.createElement("button");
 var choice4 = document.createElement("button");
 
-// console.log(choices["4"][3]);
-
-function startQuiz() {
-    //triggered by clicking Start Quiz button
-	console.log("Let the games begin!");
-
+function startQuiz() { //triggered by clicking Start Quiz button
+    console.log("starQuiz function has commenced!");
     welcomeHeader.classList.add("hidden"); //hide initial page content
     welcomeInstructions.classList.add("hidden");
     startButton.classList.add("hidden");
-	var scoreLink = document.createElement("a");
+	var scoreLink = document.createElement("a"); //insert link for high scores
 	scoreLink.classList.add("score-link");
 	scoreLink.setAttribute('href','./high-scores.html');
 	scoreLink.innerText = "View High Scores";
 	gameHeader.appendChild(scoreLink);
-	mainTimer.classList.add("timer");
-	// mainTimer.textContent = "Time Remaining: " + timeLeft + " seconds";
+	mainTimer.classList.add("timer"); //insert timer
 	gameHeader.appendChild(mainTimer);
     correctScore = 0; //reset score
 	timeLeft = 15; //reset timer
-    //start timer
-	quizTimer(timeLeft);
-	//show quiz question
-    loadQuestion();
+	quizTimer(timeLeft);     //start timer
+    loadQuestion();	//load first quiz question
 }
 
 function quizTimer () {
@@ -93,13 +84,10 @@ function quizTimer () {
 }
 
 function loadQuestion() {
-	choiceValue = ""
-	choiceValidate = "";
-	choiceGrade = "";
+	// choiceValue = ""
+	// choiceValidate = "";
+	// choiceGrade = "";
     console.log("A new question has loaded!");
-    //   for (var i = 0; i < answers.length; i++) {
-    questionNumber = questionArray[currentQuestion];
-    
     //give new elements class names (choice-btn)
 	questionText.classList.add("question-text");
     choiceContainer.classList.add("choice-container");
@@ -129,13 +117,11 @@ function loadQuestion() {
     choiceContainer.appendChild(choice3);
     choiceContainer.appendChild(choice4);
     console.log("the currentQuestion iteration number is: " + currentQuestion);
-    console.log("the current question is: " + questionNumber);
+    console.log("the current question is: " + (questionArray[currentQuestion]));
 
-    // var choiceBox = document.querySelector("choice-container");
-    // var choiceButton = document.getElementsByClassName("choice-btn");
-    // choiceContainer.addEventListener("click", function(){
     choiceContainer.addEventListener("click", function (event) {
-        var userChoice = event.target;
+		event.stopPropagation;
+		var userChoice = event.target;
         console.log("the numerical value (1-4) of the button that was just clicked was " + userChoice.value + ", which is stored in the variable userChoice.value");
 		console.log("the current value of choiceValue is: " + choiceValue);
 		console.log("the current value of userChoice.value is: " + userChoice.value);
@@ -160,7 +146,7 @@ function loadQuestion() {
     });
 };
 
-function choiceValidate(userResponse) {
+function choiceValidate (userResponse) {
 	console.log("the choiceValidate function has started! The current value of userResponse is: " + userResponse);
 	//validation function to determine if selected option matches the correct answer
 	//if userAnswerIndex === answers[currentQuestion] then value = true, else value = false
@@ -192,14 +178,13 @@ function choiceGrade (){
 		// audio.play();
 		//rule to determine if any questions are left. If yes - recall loadQuestion function. Else - call endQuiz function
 	} else if (!choiceValidate) {
-		timeLeft = timeLeft - 10;
+		timeLeft = timeLeft - 10; //reduce timer by 10 sec
 		playWrongSound()
 		function playWrongSound() {
 			var wrongSound = new Audio('./assets/audio/wrong.wav');
 			wrongSound.play();
 		};
 		console.log("The answer is wrong! The value of the current score (correctScore) is: " + correctScore);
-		//reduce timer by 10 sec
 		//rule to determine if any questions are left. If yes - recall loadQuestion function. Else - call endQuiz function
 	};
 };
@@ -236,29 +221,10 @@ function endQuiz() {
  		// set new submission to local storage 
  		localStorage.setItem("user", JSON.stringify(user));
   	});
-
-    //stop timer, check value
-    //return value of correctScore
-    //hide current question content
-    //display end game message (call another function for this?)
 }
 
 var startButton = document.querySelector("#start-btn"); //identify variable for start button
 startButton.addEventListener("click", startQuiz); //add event listener to trigger startQuiz function once clicked
-
-//main game function
-
-//choice click handler
-
-//start click handler
-
-//question load
-
-//choice validate
-
-//timer
-
-//define all questions in a single array, or separate? Iterate as a loop for 1-5? Different behavior needed for last question.
 
 //Q1: "Commonly used data types DO NOT include:"
 //Q1 Choices: ["strings", "booleans", "alerts", "numbers"]
@@ -276,4 +242,4 @@ startButton.addEventListener("click", startQuiz); //add event listener to trigge
 //Q5 Choices: ["numbers & strings", "other arrays", "booleans", "all of the above"]
 
 //dont try to match up strings for validations. Just establish the numerical choice or div ID reference for the correct answer on each question. Then just validate that the
-// ID number matches the answer.
+// ID number matches the answer
