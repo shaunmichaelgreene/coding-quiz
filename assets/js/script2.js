@@ -14,11 +14,14 @@ document.querySelector("#clear-scores").onclick = function () {
     localStorage.clear();
     console.log("the clear-scores button element has registered a click!");
 };
-// var clearScores = document.querySelector("#clear-scores")
-// clearScores.addEventListener("click", localStorage.clear())
-// clearScores.addEventListener("click", score1.remove())
-// var goBack = document.querySelector("#go-back")
+var clearScores = document.querySelector("#clear-scores")
+clearScores.addEventListener("click", function () {
+    localStorage.clear()
+    score1.remove()
+})
+
+var goBack = document.querySelector("#go-back")
 document.querySelector("#go-back").onclick = function() { //redirects to home page 
-    window.location.replace("https://shaunmichaelgreene.github.io/coding-quiz/index.html");
+    // window.location.replace("https://shaunmichaelgreene.github.io/coding-quiz/index.html");
     console.log("the go-back button element has registered a click!");
 };

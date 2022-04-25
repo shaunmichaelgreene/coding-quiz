@@ -207,7 +207,12 @@ function endQuiz() {
 			score: finalScore
 		}
 		// set new submission to local storage 
-		localStorage.setItem("user", JSON.stringify(user));
+		var scoreList = localStorage.getItem("user");
+			scoreList = scoreList ? scoreList : [];
+			scoreList.push(user);
+
+
+		// localStorage.setItem("user", JSON.stringify(user));
 	});
 };
 
