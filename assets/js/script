@@ -31,7 +31,7 @@ var choiceValue = "";
 var mainHeader = document.querySelector("#main-header");
 var gameHeader = document.querySelector("#game-header");
 var mainTimer = document.createElement("a");
-var timeLeft = 15;
+var timeLeft = 30;
 
 //create new elements for question container div, h2 question text, and buttons for each answer choice
 var questionContainer = document.createElement("div");
@@ -55,7 +55,7 @@ function startQuiz() { //triggered by clicking Start Quiz button
 	mainTimer.classList.add("timer"); //insert timer
 	gameHeader.appendChild(mainTimer);
     correctScore = 0; //reset score
-	timeLeft = 15; //reset timer
+	timeLeft = 30; //reset timer
 	quizTimer(timeLeft);     //start timer
     loadQuestion();	//load first quiz question
 }
@@ -73,7 +73,8 @@ function quizTimer () {
 			// When `timeLeft` is equal to 1, rename to 'second' instead of 'seconds'
 			mainTimer.textContent = 'Time Remaining: ' + timeLeft + ' second';
 			timeLeft--;
-		}   else {
+		}   else if (timeLeft < 0) {
+			timeLeft = 0;
 			// Once `timeLeft` gets to 0, set `mainTimer` to an empty string
 			mainTimer.textContent = '';
 			// Use `clearInterval()` to stop the timer
@@ -122,7 +123,7 @@ function loadQuestion() {
 
 function nextQuestion() {
 	choiceValue = ""
-    if (currentQuestion > answers.length) {
+    if (currentQuestion >= answers.length) {
 		//if the question count is greater than the length of the answer array, end the quiz
 		console.log("No more questions to ask, proceeding to endQuiz function!")
 		endQuiz();
@@ -230,13 +231,16 @@ choiceContainer.addEventListener("click", function (event) {
 });	
 
 startButton.addEventListener("click", startQuiz); //add event listener to trigger startQuiz function once clicked
+
+
 //FUNCTIONS
 //0. Initial Setup: declares global variables & new HTML elements.
 //1. startQuiz: starts timer(quizTimer), hides initial page content, loads first question (loadQuestion)
 //2. quizTimer: starts timer, updates timer display while time is left. Once time is up, calls endQuiz function
 //3. loadQuestion: adds classes & text content to previously created elements for questions and choice buttons, assigns value attributes to each choiceButton, appends elements to the page. 
-//4. choiceValidate: Checks if selected button (choiceValue) matches the correct answer. Adds points or removes time if right or wrong. Increments currentQuestion iterator. **Calls nextQuestion function? 
-//5. endQuiz: hides existing quiz content and header. Displays final score, initialsInput field and submit button. Saves score to localStorage (should this be called as a separate function?)
+//4. nextQuestion: loads subsequent questions after #1
+//5. choiceValidate: Checks if selected button (choiceValue) matches the correct answer. Adds points or removes time if right or wrong. Increments currentQuestion iterator. **Calls nextQuestion function? 
+//6. endQuiz: hides existing quiz content and header. Displays final score, initialsInput field and submit button. Saves score to localStorage (should this be called as a separate function?)
 
 
 //Q1: "Commonly used data types DO NOT include:"
