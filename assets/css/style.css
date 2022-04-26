@@ -1,5 +1,5 @@
 /* start screen styling */
-#welcome-header {
+#welcome-header, .score-header {
     text-align: center;
     color: blue;
     font-size: 42px;
@@ -96,6 +96,11 @@
 
 .score-button-box {
     padding-top: 10px;
+}
+
+#go-back a, .submit-btn a {
+    color: black;
+    text-decoration: none;
 }
 
 .visible {

@@ -193,7 +193,7 @@ function endQuiz() {
 	initialsInput.classList.add("initials-input");
 	initialsInput.textContent = ("Enter Your Initials");
 	var submitButton = document.createElement("button");
-	submitButton.classList.add("initials-btn");
+	submitButton.classList.add("submit-btn");
 	submitButton.textContent = ("Submit");
 	mainHeader.appendChild(endHeader);
 	endHeader.appendChild(endMessage);
@@ -205,16 +205,42 @@ function endQuiz() {
 		var user = {
 			initials: initialsInput.value.trim(),
 			score: finalScore
-		}
-		// set new submission to local storage 
-		var scoreList = localStorage.getItem("user");
-			scoreList = scoreList ? scoreList : [];
-			scoreList.push(user);
+		};
+			localStorage.setItem("user", JSON.stringify(user));
 
-
-		// localStorage.setItem("user", JSON.stringify(user));
 	});
 };
+//saveScores(user); - call moved from end of user object declaration in endQuiz.
+// var saveScores = function (user) {
+// 	var scoreList = localStorage.getItem("user");
+// 	if (!scoreList) {
+// 		scoreList = [];
+// 	} else {
+// 		scoreList.push(user);
+// 	}
+// 	console.log("scoreList is: " + scoreList)
+// 	localStorage.setItem("user", JSON.stringify(user));
+// };
+
+		//Brennan's method
+		// scoreList = scoreList ? scoreList.split(',') : [];
+		
+		// localStorage.setItem('user', scoreList.toString)
+		
+		// set new submission to local storage 
+
+		// var scoreList = localStorage.getItem("user");
+		// 	if (scoreList == null) {
+		// 		scoreList = scorelist.split(',');
+		// 		console.log(scoreList);
+		// 	} else {
+		// 	scoreList.push(user);
+		// 	}
+		// localStorage.setItem('user', scoreList.toString)
+		// console.log("scoreList is: " + scoreList)
+		
+		// localStorage.setItem("user", JSON.stringify(user));
+
 
 choiceContainer.addEventListener("click", function (event) {
 	event.stopPropagation;

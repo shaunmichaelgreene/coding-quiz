@@ -1,13 +1,12 @@
-debugger;
 var scoreList = document.querySelector("#scores");
 var user = localStorage.getItem('user');
 var savedUser = JSON.parse(user);
 console.log(savedUser.initials);
 console.log(savedUser.score);
 
-var score1 = document.createElement('li');
-score1.textContent = ("Initials: " + savedUser.initials + " | Score: " + savedUser.score);
-scoreList.appendChild(score1);
+var scoreListItem = document.createElement('li');
+scoreListItem.textContent = ("Initials: " + savedUser.initials + " | Score: " + savedUser.score);
+scoreList.appendChild(scoreListItem);
 
 //temporarily removing the below logic while debugging
 document.querySelector("#clear-scores").onclick = function () {
@@ -17,7 +16,8 @@ document.querySelector("#clear-scores").onclick = function () {
 var clearScores = document.querySelector("#clear-scores")
 clearScores.addEventListener("click", function () {
     localStorage.clear()
-    score1.remove()
+    // scoreListItem.remove()
+    scoreListItem.textContent = (' ');
 })
 
 var goBack = document.querySelector("#go-back")
