@@ -31,7 +31,9 @@ var choiceValue = "";
 var mainHeader = document.querySelector("#main-header");
 var gameHeader = document.querySelector("#game-header");
 var mainTimer = document.createElement("a");
-var timeLeft = 30;
+var timeLeft = 60;
+var finalScore = 0;
+
 
 //create new elements for question container div, h2 question text, and buttons for each answer choice
 var questionContainer = document.createElement("div");
@@ -41,6 +43,8 @@ var choice1 = document.createElement("button");
 var choice2 = document.createElement("button");
 var choice3 = document.createElement("button");
 var choice4 = document.createElement("button");
+var submitButton = document.createElement("button");
+var initialsInput = document.createElement("input");
 
 function startQuiz() { //triggered by clicking Start Quiz button
     console.log("starQuiz function has commenced!");
@@ -55,7 +59,7 @@ function startQuiz() { //triggered by clicking Start Quiz button
 	mainTimer.classList.add("timer"); //insert timer
 	gameHeader.appendChild(mainTimer);
     correctScore = 0; //reset score
-	timeLeft = 30; //reset timer
+	timeLeft = 60; //reset timer
 	quizTimer(timeLeft);     //start timer
     loadQuestion();	//load first quiz question
 }
@@ -181,7 +185,7 @@ function choiceValidate (userResponse) {
 function endQuiz() {
 	questionContainer.remove();
 	mainTimer.classList.add("hidden");
-	var finalScore = timeLeft + correctScore
+	finalScore = timeLeft + correctScore
 	var endHeader = document.createElement("div");
 	endHeader.classList.add("end-header");
 	var endMessage = document.createElement("h2");
@@ -189,58 +193,37 @@ function endQuiz() {
 	var endSubHeader = document.createElement("h3");
 	endSubHeader.classList.add("end-subheader");
 	endSubHeader.textContent = ("Your final score is: " + finalScore);
-	var initialsInput = document.createElement("input");
 	initialsInput.classList.add("initials-input");
 	initialsInput.textContent = ("Enter Your Initials");
-	var submitButton = document.createElement("button");
 	submitButton.classList.add("submit-btn");
 	submitButton.textContent = ("Submit");
 	mainHeader.appendChild(endHeader);
 	endHeader.appendChild(endMessage);
 	endHeader.appendChild(endSubHeader);
 	endHeader.appendChild(initialsInput);
-	endHeader.appendChild(submitButton);
-	submitButton.addEventListener("click", function(event) {
-		event.preventDefault();
-		var user = {
-			initials: initialsInput.value.trim(),
-			score: finalScore
-		};
-			localStorage.setItem("user", JSON.stringify(user));
-
-	});
+	endHeader.appendChild(submitButton);	
 };
-//saveScores(user); - call moved from end of user object declaration in endQuiz.
-// var saveScores = function (user) {
-// 	var scoreList = localStorage.getItem("user");
-// 	if (!scoreList) {
-// 		scoreList = [];
-// 	} else {
-// 		scoreList.push(user);
-// 	}
-// 	console.log("scoreList is: " + scoreList)
-// 	localStorage.setItem("user", JSON.stringify(user));
-// };
 
-		//Brennan's method
-		// scoreList = scoreList ? scoreList.split(',') : [];
-		
-		// localStorage.setItem('user', scoreList.toString)
-		
-		// set new submission to local storage 
+var saveScores = function (user) {
+	var scoreList = JSON.parse(localStorage.getItem("user"));
+	if (!scoreList) {
+		scoreList = [];
+	}
+	// scoreList.push(user);
+	localStorage.setItem("user", JSON.stringify(user));
+		console.log("scoreList is: " + scoreList)
+};
 
-		// var scoreList = localStorage.getItem("user");
-		// 	if (scoreList == null) {
-		// 		scoreList = scorelist.split(',');
-		// 		console.log(scoreList);
-		// 	} else {
-		// 	scoreList.push(user);
-		// 	}
-		// localStorage.setItem('user', scoreList.toString)
-		// console.log("scoreList is: " + scoreList)
-		
+submitButton.addEventListener("click", function(event) {
+	event.preventDefault();
+	const user = {
+		initials: initialsInput.value.trim(),
+		score: finalScore
+	};
+	saveScores(user); 
 		// localStorage.setItem("user", JSON.stringify(user));
 
+});
 
 choiceContainer.addEventListener("click", function (event) {
 	event.stopPropagation;
@@ -272,6 +255,7 @@ startButton.addEventListener("click", startQuiz); //add event listener to trigge
 //4. nextQuestion: loads subsequent questions after #1
 //5. choiceValidate: Checks if selected button (choiceValue) matches the correct answer. Adds points or removes time if right or wrong. Increments currentQuestion iterator. **Calls nextQuestion function? 
 //6. endQuiz: hides existing quiz content and header. Displays final score, initialsInput field and submit button. Saves score to localStorage (should this be called as a separate function?)
+//7. saveScores: saves the current user's score and appends to localStorage array. 
 
 
 //Q1: "Commonly used data types DO NOT include:"
@@ -294,20 +278,21 @@ startButton.addEventListener("click", startQuiz); //add event listener to trigge
 // ID number matches the answer
 
 //code graveyard
-// choiceValidate (choiceValue); //call choiceValidate function to determine if the selected choice is correct, return true or false (this line removed from loadQuestion function)
-// choiceGrade (choiceValidate);// call choiceGrade function to add points or remove time, depending on the grade
-// function choiceGrade (){
-	// 	console.log("the choiceGrade function has started! The current value of choiceValidate is: " + choiceValidate);
-	
-	// 	if (choiceValidate) {
-		// 		//the underlying function is called by the optionButton event listener, which will return the value of true or false.
-		// 		correctScore++;
-	// 		console.log("The answer is correct! The value of the current score (correctScore) is: " + correctScore);
-	// 		// var audio = new Audio('./assets/audio/correct.wav');
-	// 		// audio.play();
-	// 		//rule to determine if any questions are left. If yes - recall loadQuestion function. Else - call endQuiz function
-	// 	} else if (!choiceValidate) {
-	// 		console.log("The answer is wrong! The value of the current score (correctScore) is: " + correctScore);
-	// 		//rule to determine if any questions are left. If yes - recall loadQuestion function. Else - call endQuiz function
-	// 	};
-	// 
+//Alternate persistence method
+// scoreList = scoreList ? scoreList.split(',') : [];
+
+// localStorage.setItem('user', scoreList.toString)
+
+// set new submission to local storage 
+
+// var scoreList = localStorage.getItem("user");
+// 	if (scoreList == null) {
+// 		scoreList = scorelist.split(',');
+// 		console.log(scoreList);
+// 	} else {
+// 	scoreList.push(user);
+// 	}
+// localStorage.setItem('user', scoreList.toString)
+// console.log("scoreList is: " + scoreList)
+
+// localStorage.setItem("user", JSON.stringify(user));

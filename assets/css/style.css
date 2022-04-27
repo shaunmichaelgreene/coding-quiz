@@ -1,3 +1,9 @@
+/* body styling */
+body {
+    padding: 25px;
+    background-color: #86a5a5;
+}
+
 /* start screen styling */
 #welcome-header, .score-header {
     text-align: center;
@@ -18,7 +24,7 @@
     color:blue;
 }
 
-#start-btn {
+#start-btn, #clear-scores, #go-back {
     margin: 0 auto;
     width: 200px;
     height: 100px;
@@ -30,8 +36,35 @@
     background-color: yellow;
 }
 
+#clear-scores, #go-back {
+    margin: 0 auto;
+    width: 175px;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border-color: blue;
+    font-size:x-large;
+    background-color: yellow;
+}
+
 #start-btn:hover {
     color:red;
+    border-width: 4px;
+}
+#go-back:hover {
+    color: red;
+    border-width: 4px;
+}
+
+.back > :hover {
+    color: red;
+    border-width: 4px;
+}
+
+
+#clear-scores:hover {
+    color: red;
     border-width: 4px;
 }
 /*end start screen styles*/
@@ -63,12 +96,10 @@
     justify-content: space-around;
 }
 
-.score-link {
-    color: red;
-}
-
-.timer {
-    color: red;
+.score-link, .timer {
+    color: blue;
+    font-weight: bold;
+    font-size: large;
 }
 
 .end-header {
@@ -76,14 +107,13 @@
     text-align: center;
 }
 
-.score-container {
+.score-list-container {
     text-align: center;
     padding: 10%;
     margin: 0 20px;
 }
 
 #scores {
-    border: 2px solid blue;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 36px;
     color: blue;
@@ -91,7 +121,7 @@
 }
 
 .score-box {
-    border: 5px solid red;
+    border: 5px solid blue;
 }
 
 .score-button-box {
